@@ -8,7 +8,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -19,12 +18,10 @@ import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,7 +31,10 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.jetpackcompose.ui.theme.JetpackComposeTheme
 
 val customYellow = Color(0xFFF9E621)
-val customBlue = Color(0xFF1ac6ff)
+val customBlue = Color(0xFF0AA9F4)
+val customGrayButton = Color(0xFFD3D3D3)
+val customGrayHiddenText = Color(0xFFAFAFAF)
+val customGrayText = Color(0xFF555555)
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,9 +42,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             JetpackComposeTheme {
                 LogInScreen()
-//                Surface(color = MaterialTheme.colors.background) {
-//                    UserInput("Android")
-//                }
             }
         }
     }
@@ -60,9 +57,9 @@ fun LogInScreen() {
             ForgotPasswordText()
             LogInButton()
             LogInWithOtherAccounts()
-            LogInWith(R.drawable.facebook, "Facebook")
-            LogInWith(R.drawable.google, "Google")
-            LogInWith(R.drawable.apple, "Apple")
+            LogInWith(R.drawable.facebook, stringResource(R.string.facebook))
+            LogInWith(R.drawable.google, stringResource(R.string.google))
+            LogInWith(R.drawable.apple, stringResource(R.string.apple))
         }
         ConstraintLayout(
             modifier = Modifier
@@ -82,17 +79,17 @@ fun ToolBar() {
             Column(
                 modifier = Modifier
                     .wrapContentHeight(CenterVertically)
-
                     .padding(vertical = 8.dp)
             ) {
                 Text(
-                    text = "makeA",
+                    text = stringResource(R.string.makeA),
                     color = Color.White,
                     fontSize = 17.sp,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = "Log In", fontSize = 18.sp,
+                    text = stringResource(R.string.log_in),
+                    fontSize = 18.sp,
                     modifier = Modifier
                         .wrapContentHeight(CenterVertically)
                 )
@@ -111,7 +108,7 @@ fun UserInput() {
         onValueChange = {
             emailText.value = it
         },
-        placeholder = { Text("Enter Email", color = Color.LightGray) },
+        placeholder = { Text(stringResource(R.string.enter_email), color = customGrayHiddenText) },
         colors = TextFieldDefaults.textFieldColors(backgroundColor = Color.White),
         modifier = Modifier
             .fillMaxWidth()
@@ -127,7 +124,12 @@ fun PasswordInput() {
         onValueChange = {
             passwordText.value = it
         },
-        placeholder = { Text("Enter Password", color = Color.LightGray) },
+        placeholder = {
+            Text(
+                stringResource(R.string.enter_password),
+                color = customGrayHiddenText
+            )
+        },
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = Color.White
         ),
@@ -140,13 +142,14 @@ fun PasswordInput() {
 @Composable
 fun ForgotPasswordText() {
     Text(
-        "Click here if you forgot your password",
+        stringResource(R.string.click_here_if_you_forgot_your_password),
         style = TextStyle(textDecoration = TextDecoration.Underline),
         color = customBlue,
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 8.dp),
-        textAlign = TextAlign.End
+        textAlign = TextAlign.End,
+        fontSize = 12.sp
     )
 }
 
@@ -155,23 +158,23 @@ fun LogInButton() {
     Button(
         onClick = {},
         colors = ButtonDefaults.textButtonColors(
-            backgroundColor = Color.LightGray
+            backgroundColor = customGrayButton
         ),
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 20.dp),
         shape = MaterialTheme.shapes.large
     ) {
-        Text("Log In", color = Color.Black)
+        Text(text = stringResource(R.string.log_in), color = Color.Black)
     }
 }
 
 @Composable
 fun LogInWithOtherAccounts() {
     Text(
-        "Log In With Other Accounts",
+        stringResource(R.string.log_in_with_others_account),
         color = Color.Gray,
-        fontSize = 13.sp,
+        fontSize = 12.sp,
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 28.dp, bottom = 6.dp),
@@ -211,7 +214,7 @@ fun LogInWith(icon: Int, text: String) {
 @Composable
 fun SignInText() {
     Text(
-        "Sign In Here",
+        stringResource(R.string.sign_in_here),
         fontSize = 14.sp,
         style = TextStyle(textDecoration = TextDecoration.Underline),
         modifier = Modifier
@@ -230,33 +233,27 @@ fun InformationButton() {
             .fillMaxHeight()
             .wrapContentHeight(align = Alignment.Bottom)
             .background(color = customYellow)
-            .padding(horizontal = 16.dp, vertical = 10.dp),
+            .padding(horizontal = 10.dp, vertical = 10.dp),
         Arrangement.Center
     ) {
-        ClickableText(
-            text = AnnotatedString("Contact"), onClick = {},
-            style = TextStyle(fontSize = 12.5.sp),
-            modifier = Modifier.background(color = Color.Transparent)
-        )
+        InformationButton(stringResource(R.string.contact))
         VerticleLine()
-        ClickableText(
-            text = AnnotatedString("Operating Company"), onClick = {},
-            style = TextStyle(fontSize = 12.5.sp),
-            modifier = Modifier.background(color = Color.Transparent)
-        )
+        InformationButton(stringResource(R.string.operating_company))
         VerticleLine()
-        ClickableText(
-            text = AnnotatedString("Terms of Service"), onClick = {},
-            style = TextStyle(fontSize = 12.5.sp),
-            modifier = Modifier.background(color = Color.Transparent)
-        )
+        InformationButton(stringResource(R.string.terms_of_service))
         VerticleLine()
-        ClickableText(
-            text = AnnotatedString("Policy"), onClick = {},
-            style = TextStyle(fontSize = 12.5.sp),
-            modifier = Modifier.background(color = Color.Transparent)
-        )
+        InformationButton(stringResource(R.string.policy))
     }
+}
+
+@Composable
+fun InformationButton(text: String) {
+    Text(
+        text = text,
+        fontSize = 12.sp,
+        modifier = Modifier.background(color = Color.Transparent),
+        color = customGrayText
+    )
 }
 
 @Composable
@@ -264,7 +261,8 @@ fun VerticleLine() {
     Text(
         text = "  |  ",
         fontSize = 12.5.sp,
-        modifier = Modifier.background(color = Color.Transparent)
+        modifier = Modifier.background(color = Color.Transparent),
+        color = customGrayText
     )
 }
 

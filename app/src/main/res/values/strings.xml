@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">JetpackCompose</string>
+    <string name="makeA">makeA</string>
+    <string name="log_in">ログイン</string>
+    <string name="enter_email">メールアドレス</string>
+    <string name="enter_password">パスワード</string>
+    <string name="click_here_if_you_forgot_your_password">パスワード忘れた場合はこちら</string>
+    <string name="log_in_with_others_account">外部アカウントでログイン</string>
+    <string name="sign_in_here">新規会員登録はこちらから</string>
+    <string name="contact">お問い合わせ</string>
+    <string name="operating_company">運営会社</string>
+    <string name="terms_of_service">利用規約</string>
+    <string name="policy">プライバシーポリシー</string>
+    <string name="facebook">Facebook</string>
+    <string name="google">Google</string>
+    <string name="apple">Apple</string>
 </resources>
